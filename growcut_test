@@ -1,0 +1,27 @@
+# growcut
+growcut labels matlab
+%-- Tests growcut.m
+close all;clear all;clc;
+%-- Load image and seeds
+img = imread('D:\mathwork\iphone6\001_IP5_IN_F_RI_01_2.jpg');
+% lab =rgb2gray(imread('label22.jpg'));
+% labels = double(lab)-1;
+labels = double(imread('label22.png'))-1;
+
+
+subplot(2,2,1), imshow(img);
+subplot(2,2,2), imshow(labels,[]);
+subplot(2,2,3), imshow(img);
+
+%-- For segmentation
+[labels_out, strengths] = growcut(img,labels);
+
+%-- For Smoothing
+labels_out = medfilt2(labels_out,[3,3]);
+
+hold on;
+contour(labels_out,[0 0],'g','linewidth',4);
+contour(labels_out,[0 0],'k','linewidth',2);
+hold off;
+
+subplot(2,2,4), imshow(labels_out);
